@@ -55,6 +55,7 @@ public class bstFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 * 
+	 * 
 	 */
 	public bstFrame() {
 		setResizable(false);
