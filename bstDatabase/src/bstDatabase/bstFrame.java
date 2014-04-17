@@ -220,6 +220,15 @@ public class bstFrame extends JFrame {
 		});
 		btnNewButton.setBounds(298, 10, 80, 23);
 		contentPane.add(btnNewButton);
+		
+		JButton btnUpdateChanges = new JButton("Update Changes");
+		btnUpdateChanges.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updateChanges(Integer.parseInt(ssnField.getText()));
+			}
+		});
+		btnUpdateChanges.setBounds(265, 200, 113, 23);
+		contentPane.add(btnUpdateChanges);
 	}
 
 	public void setFields(int ssn) {
@@ -238,5 +247,25 @@ public class bstFrame extends JFrame {
 		yearField.setText(account.getByear() + "");
 		departmentComboBox.setSelectedItem(account.getDepartment());
 		chckbxActive.setSelected(account.isActive());
+	}
+	
+	public void updateChanges(int ssn){
+		Account account = main.getAccount(ssn);
+		account.setFname(fNameField.getText());
+		account.setLname(lNameField.getText());
+		account.setPhone(Long.parseLong(phoneField.getText()));
+		account.setEmail(emailField.getText());
+		account.setAddress(addressField.getText());
+		account.setZip(Integer.parseInt(zipField.getText()));
+		account.setPassword(passwordField.getText());
+		account.setBmonth(monthComboBox.getSelectedIndex());
+		account.setBday(dayComboBox.getSelectedIndex());
+		account.setByear(Integer.parseInt(yearField.getText()));
+		account.setDepartment((String)departmentComboBox.getSelectedItem());
+		account.setActive(chckbxActive.isSelected());
+		
+		
+		
+		System.out.println(main.getAccount(ssn));
 	}
 }
