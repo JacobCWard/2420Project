@@ -2,6 +2,7 @@ package bstDatabase;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public class PopulateTreeNodes {
 
 	private static Tree database;
@@ -23,6 +24,9 @@ public class PopulateTreeNodes {
 
 		database.insertNode(database.root,a);
 		System.out.println(database.getNode(111111111).getAccount().toString());
+		database.insertNode(database.root, new Account(123456789, "Robinson", "Sean", 4355555050L, "seanrobinson@utahcorp.com", "100 N 321 E", 84720, "P@$$w0rD", 4,20,1994, "Tech Support" ));
+		System.out.println(database.getNode(123456789).getAccount());
+		
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -53,11 +57,11 @@ public class PopulateTreeNodes {
 //		System.out.println(database.getNode(181242337).getAccount().toString());
 //		database.deactivateNode(181242337);
 //		System.out.println(database.getNode(181242337).getAccount().toString());
-		PopulateTreeNodes main = new PopulateTreeNodes();
+		new PopulateTreeNodes();
 		System.out.println(database.getNode(111111111).getAccount());
 	}
 	
-	public static Account getAccount(int ssn){
+	public Account getAccount(int ssn){
 		return database.getNode(ssn).getAccount();
 	}
 }
