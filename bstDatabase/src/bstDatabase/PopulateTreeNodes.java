@@ -29,7 +29,7 @@ public class PopulateTreeNodes {
 		
 	}
 	
-	public static void main(String[] args) throws Exception {
+//	public static void main(String[] args) throws Exception {
 //		long startTime = System.currentTimeMillis();
 //		String[] data = Utilities.fileToStringArray("datacitystate.csv");
 //		Account[] accounts = new Account[data.length];
@@ -57,9 +57,9 @@ public class PopulateTreeNodes {
 //		System.out.println(database.getNode(181242337).getAccount().toString());
 //		database.deactivateNode(181242337);
 //		System.out.println(database.getNode(181242337).getAccount().toString());
-		new PopulateTreeNodes();
-		System.out.println(database.getNode(111111111).getAccount());
-	}
+//		new PopulateTreeNodes();
+//		System.out.println(database.getNode(111111111).getAccount());
+//	}
 	
 	public Account getAccount(int ssn){
 		return database.getNode(ssn).getAccount();

@@ -43,7 +43,7 @@ public class bstFrame extends JFrame {
 	 */
 	public static void main(String[] args) throws Exception {
 		main = new PopulateTreeNodes();
-		UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); // Change
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); // Change
 																				// for
 																				// WindowsLookAndFeel
 
@@ -65,7 +65,7 @@ public class bstFrame extends JFrame {
 		setResizable(false);
 		setTitle("Account Information");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 392, 261);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -144,6 +144,7 @@ public class bstFrame extends JFrame {
 		contentPane.add(lblCity);
 
 		cityField = new JTextField();
+		cityField.setEditable(false);
 		cityField.setBounds(77, 120, 151, 20);
 		contentPane.add(cityField);
 		cityField.setColumns(10);
@@ -153,6 +154,7 @@ public class bstFrame extends JFrame {
 		contentPane.add(lblState);
 
 		stateField = new JTextField();
+		stateField.setEditable(false);
 		stateField.setBounds(265, 120, 113, 20);
 		contentPane.add(stateField);
 		stateField.setColumns(10);
