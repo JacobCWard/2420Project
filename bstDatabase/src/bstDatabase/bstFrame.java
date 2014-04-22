@@ -53,7 +53,7 @@ public class bstFrame extends JFrame {
 		if (OS.contains("windows")) {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} else if (OS.equals("mac os x")) {		//TODO Adjust sizes for bigger font
+		} else if (OS.equals("mac os x")) { // TODO Adjust sizes for bigger font
 			UIManager.setLookAndFeel("com.apple.laf.AquaLookAndFeel");
 		} else {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -92,12 +92,7 @@ public class bstFrame extends JFrame {
 		ssnField = new JTextField();
 		ssnField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setFields(Integer.parseInt(ssnField.getText())); // Populating
-																	// fields
-																	// from
-																	// pressing
-																	// Enter in
-																	// ssnField
+				setFields(Integer.parseInt(ssnField.getText()));
 			}
 		});
 		ssnField.setBounds(133, 11, 106, 20);
@@ -235,13 +230,7 @@ public class bstFrame extends JFrame {
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setFields(Integer.parseInt(ssnField.getText())); // Calling
-																	// setFields
-																	// to
-																	// populate
-																	// all of
-																	// the
-																	// JTextFields
+				setFields(Integer.parseInt(ssnField.getText()));
 			}
 		});
 		btnNewButton.setBounds(249, 10, 70, 23);
