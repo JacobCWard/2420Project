@@ -73,7 +73,7 @@ public class bstFrame extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked" })
 	public bstFrame() {
-
+		/************************ Creating GUI components ****************************/
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage("images/utahcorp.png"));
 		setResizable(false);
@@ -226,7 +226,9 @@ public class bstFrame extends JFrame {
 		chckbxActive.setSelected(true);
 		chckbxActive.setBounds(265, 169, 97, 23);
 		contentPane.add(chckbxActive);
+		/************************ END GUI creation ****************************/
 
+		/************************ Search button ****************************/
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -236,6 +238,7 @@ public class bstFrame extends JFrame {
 		btnNewButton.setBounds(249, 10, 70, 23);
 		contentPane.add(btnNewButton);
 
+		/************************ Update Changes button ****************************/
 		JButton btnUpdateChanges = new JButton("Update Changes");
 		btnUpdateChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -245,13 +248,14 @@ public class bstFrame extends JFrame {
 		});
 		btnUpdateChanges.setBounds(265, 200, 113, 23);
 		contentPane.add(btnUpdateChanges);
-
+		/************************ New button ****************************/
 		JButton btnNew = new JButton("New");
 		btnNew.addActionListener(new ActionListener() {
 			@SuppressWarnings("static-access")
 			public void actionPerformed(ActionEvent arg0) {
 				Account a = new Account(Integer.parseInt(ssnField.getText()));
 				main.getDatabase().insertNode(main.getDatabase().root, a);
+				/************************ Message Dialog for creating a new account ****************************/
 				JOptionPane
 						.showMessageDialog(
 								null,
@@ -273,7 +277,7 @@ public class bstFrame extends JFrame {
 
 	public void setFields(int ssn) {
 		Account account = main.getAccount(ssn);
-
+		/************************ Adding the information from our BST into GUI ****************************/
 		fNameField.setText(account.getFname());
 		lNameField.setText(account.getLname());
 		phoneField.setText(account.getPhone() + "");
@@ -289,6 +293,7 @@ public class bstFrame extends JFrame {
 		departmentComboBox.setSelectedItem(account.getDepartment());
 		chckbxActive.setSelected(account.isActive());
 		commentArea.setText(account.getComment());
+		/************************ Check isActive to enable/disable fields ****************************/
 		if (!account.isActive()) {
 			fNameField.setEnabled(false);
 			lNameField.setEnabled(false);
@@ -323,6 +328,7 @@ public class bstFrame extends JFrame {
 
 	public void updateChanges(int ssn) {
 		Account account = main.getAccount(ssn);
+		/************************ Check yearField for a valid birth year (1800 <---> Today-18Years) ****************************/
 		if (Integer.parseInt(yearField.getText()) < Calendar.getInstance().get(
 				Calendar.YEAR) - 18
 				&& Integer.parseInt(yearField.getText()) > 1800) {
@@ -334,6 +340,7 @@ public class bstFrame extends JFrame {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		/************************ Check emailField for a valid email address (if it contains @ and .) ****************************/
 		if (emailField.getText().contains("@")
 				&& emailField.getText().contains(".")) {
 			account.setEmail(emailField.getText());
@@ -346,6 +353,7 @@ public class bstFrame extends JFrame {
 		}
 		account.setFname(fNameField.getText());
 		account.setLname(lNameField.getText());
+		/************************ Error handling for the phone number if it has non-digits ****************************/
 		try {
 			account.setPhone(Long.parseLong(phoneField.getText()));
 		} catch (Exception e) {
