@@ -53,7 +53,7 @@ public class bstFrame extends JFrame {
 		if (OS.contains("windows")) {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} else if (OS.equals("mac os x")) {
+		} else if (OS.equals("mac os x")) {		//TODO Adjust sizes for bigger font
 			UIManager.setLookAndFeel("com.apple.laf.AquaLookAndFeel");
 		} else {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
