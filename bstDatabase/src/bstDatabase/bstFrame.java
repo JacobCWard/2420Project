@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -16,6 +17,9 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import javax.swing.JTextArea;
+import java.awt.Toolkit;
 
 @SuppressWarnings({ "serial", "unused", "rawtypes" })
 public class bstFrame extends JFrame {
@@ -36,6 +40,7 @@ public class bstFrame extends JFrame {
 	private JComboBox departmentComboBox;
 	private JComboBox dayComboBox;
 	private JComboBox monthComboBox;
+	private JTextArea commentArea;
 	private static PopulateTreeNodes main;
 
 	/**
@@ -43,10 +48,16 @@ public class bstFrame extends JFrame {
 	 */
 	public static void main(String[] args) throws Exception {
 		main = new PopulateTreeNodes();
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); // Change
-																				// for
-																				// WindowsLookAndFeel
 
+		String OS = System.getProperty("os.name").toLowerCase();
+		if (OS.contains("windows")) {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} else if (OS.equals("mac os x")) {
+			UIManager.setLookAndFeel("com.apple.laf.AquaLookAndFeel");
+		} else {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				bstFrame frame = new bstFrame();
@@ -62,26 +73,34 @@ public class bstFrame extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked" })
 	public bstFrame() {
+
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage("images/utahcorp.png"));
 		setResizable(false);
 		setTitle("Account Information");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 392, 261);
+		setBounds(100, 100, 400, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Social Security Number");
-		lblNewLabel.setBounds(35, 14, 113, 14);
+		lblNewLabel.setBounds(10, 14, 113, 14);
 		contentPane.add(lblNewLabel);
 
 		ssnField = new JTextField();
 		ssnField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setFields(Integer.parseInt(ssnField.getText()));	//Populating fields from pressing Enter in ssnField
+				setFields(Integer.parseInt(ssnField.getText())); // Populating
+																	// fields
+																	// from
+																	// pressing
+																	// Enter in
+																	// ssnField
 			}
 		});
-		ssnField.setBounds(158, 11, 127, 20);
+		ssnField.setBounds(133, 11, 106, 20);
 		contentPane.add(ssnField);
 		ssnField.setColumns(10);
 
@@ -209,30 +228,63 @@ public class bstFrame extends JFrame {
 		passwordField.setColumns(10);
 
 		chckbxActive = new JCheckBox("Active");
+		chckbxActive.setSelected(true);
 		chckbxActive.setBounds(265, 169, 97, 23);
 		contentPane.add(chckbxActive);
 
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setFields(Integer.parseInt(ssnField.getText()));			//Calling setFields to populate all of the JTextFields
+				setFields(Integer.parseInt(ssnField.getText())); // Calling
+																	// setFields
+																	// to
+																	// populate
+																	// all of
+																	// the
+																	// JTextFields
 			}
 		});
-		btnNewButton.setBounds(298, 10, 80, 23);
+		btnNewButton.setBounds(249, 10, 70, 23);
 		contentPane.add(btnNewButton);
-		
+
 		JButton btnUpdateChanges = new JButton("Update Changes");
 		btnUpdateChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateChanges(Integer.parseInt(ssnField.getText()));
+				setFields(Integer.parseInt(ssnField.getText()));
 			}
 		});
 		btnUpdateChanges.setBounds(265, 200, 113, 23);
 		contentPane.add(btnUpdateChanges);
+
+		JButton btnNew = new JButton("New");
+		btnNew.addActionListener(new ActionListener() {
+			@SuppressWarnings("static-access")
+			public void actionPerformed(ActionEvent arg0) {
+				Account a = new Account(Integer.parseInt(ssnField.getText()));
+				main.getDatabase().insertNode(main.getDatabase().root, a);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"The account has been created. "
+										+ "Please enter user information. Then press \"Update Changes\".");
+			}
+		});
+		btnNew.setBounds(325, 10, 53, 23);
+		contentPane.add(btnNew);
+
+		commentArea = new JTextArea();
+		commentArea.setBounds(10, 251, 374, 159);
+		contentPane.add(commentArea);
+
+		JLabel lblComments = new JLabel("Comments");
+		lblComments.setBounds(10, 233, 75, 14);
+		contentPane.add(lblComments);
 	}
 
 	public void setFields(int ssn) {
 		Account account = main.getAccount(ssn);
+
 		fNameField.setText(account.getFname());
 		lNameField.setText(account.getLname());
 		phoneField.setText(account.getPhone() + "");
@@ -247,25 +299,80 @@ public class bstFrame extends JFrame {
 		yearField.setText(account.getByear() + "");
 		departmentComboBox.setSelectedItem(account.getDepartment());
 		chckbxActive.setSelected(account.isActive());
+		commentArea.setText(account.getComment());
+		if (!account.isActive()) {
+			fNameField.setEnabled(false);
+			lNameField.setEnabled(false);
+			phoneField.setEnabled(false);
+			emailField.setEnabled(false);
+			addressField.setEnabled(false);
+			zipField.setEnabled(false);
+			cityField.setEnabled(false);
+			stateField.setEnabled(false);
+			passwordField.setEnabled(false);
+			monthComboBox.setEnabled(false);
+			dayComboBox.setEnabled(false);
+			yearField.setEnabled(false);
+			departmentComboBox.setEnabled(false);
+		} else {
+			fNameField.setEnabled(true);
+			lNameField.setEnabled(true);
+			phoneField.setEnabled(true);
+			emailField.setEnabled(true);
+			addressField.setEnabled(true);
+			zipField.setEnabled(true);
+			cityField.setEnabled(true);
+			stateField.setEnabled(true);
+			passwordField.setEnabled(true);
+			monthComboBox.setEnabled(true);
+			dayComboBox.setEnabled(true);
+			yearField.setEnabled(true);
+			departmentComboBox.setEnabled(true);
+			commentArea.setEnabled(true);
+		}
 	}
-	
-	public void updateChanges(int ssn){
+
+	public void updateChanges(int ssn) {
 		Account account = main.getAccount(ssn);
+		if (Integer.parseInt(yearField.getText()) < Calendar.getInstance().get(
+				Calendar.YEAR) - 18
+				&& Integer.parseInt(yearField.getText()) > 1800) {
+			account.setByear(Integer.parseInt(yearField.getText()));
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"The year you have entered is not valid. "
+							+ "Please enter a valid year.", "Invalid Year",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (emailField.getText().contains("@")
+				&& emailField.getText().contains(".")) {
+			account.setEmail(emailField.getText());
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"The Email address you have entered is not valid. "
+							+ "Please enter a valid Email address.",
+					"Invalid Email", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		account.setFname(fNameField.getText());
 		account.setLname(lNameField.getText());
-		account.setPhone(Long.parseLong(phoneField.getText()));
-		account.setEmail(emailField.getText());
+		try {
+			account.setPhone(Long.parseLong(phoneField.getText()));
+		} catch (Exception e) {
+			phoneField.setText(phoneField.getText().replaceAll("\\D", ""));
+			account.setPhone(Long.parseLong(phoneField.getText()));
+		}
 		account.setAddress(addressField.getText());
 		account.setZip(Integer.parseInt(zipField.getText()));
 		account.setPassword(passwordField.getText());
 		account.setBmonth(monthComboBox.getSelectedIndex());
 		account.setBday(dayComboBox.getSelectedIndex());
-		account.setByear(Integer.parseInt(yearField.getText()));
-		account.setDepartment((String)departmentComboBox.getSelectedItem());
+		account.setDepartment((String) departmentComboBox.getSelectedItem());
 		account.setActive(chckbxActive.isSelected());
-		
-		
-		
+		account.setComment(commentArea.getText());
+
 		System.out.println(main.getAccount(ssn));
+		JOptionPane.showMessageDialog(null, "The account has been updated.");
 	}
 }

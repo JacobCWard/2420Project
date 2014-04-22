@@ -64,4 +64,8 @@ public class PopulateTreeNodes {
 	public Account getAccount(int ssn){
 		return database.getNode(ssn).getAccount();
 	}
+
+	public static Tree getDatabase() {
+		return database;
+	}
 }

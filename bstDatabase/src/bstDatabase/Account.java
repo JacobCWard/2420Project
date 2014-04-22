@@ -16,9 +16,15 @@ public class Account {
 	private int byear;
 	private String department;
 	private boolean isActive = true;
+	private String comment;
 
 	public Account() {
 		super();
+	}
+	
+	public Account(int ssn) {
+		super();
+		this.ssn = ssn;
 	}
 
 	public Account(int ssn, String lname, String fname, long phone,
@@ -176,6 +182,14 @@ public class Account {
 
 	public void setBday(int bday) {
 		this.bday = bday;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public int getByear() {
