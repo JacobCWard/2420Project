@@ -1,7 +1,8 @@
 2420Project
 ===========
 Storing Accounts in a Binary Search Tree
-by: Jacob Ward     - jacobward1898@gmail.com
+
+by: Jacob Ward     - jacobward1898@gmail.com  
     Sean Robinson  - seanrobinson159@gmail.com
     
 Final Project for:  
